@@ -9,6 +9,8 @@ TagManager:
   - HitboxLeft
   - HitboxUp
   - HitboxDown
+  - Animal
+  - Lobo
   layers:
   - Default
   - TransparentFX
