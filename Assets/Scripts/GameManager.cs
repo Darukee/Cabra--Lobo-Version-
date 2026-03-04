@@ -6,18 +6,34 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static int bloodLust, numSteps, bloodLustMax;
-    string currentLevel;
+    public static string currentLevel;
     //int currentLevelNumber;
     public LayerMask wallLayer;
+    static GameManager instance;
+
+    /* void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+    */
 
     void Start()
     {
         bloodLust = 0;
-        Fase1(); //temporário
+        //Fase1(); //temporário
     }
     void Update()
     {
         Reset();
+        Fases();
     }
     void Reset()
     {
@@ -26,13 +42,6 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(currentLevel, LoadSceneMode.Single);
             LoboScript.moveBlock = false;
         }      
-    }
-    public void Fase1() //funcionando agora apenas pois não há sistema de fases ainda 
-    {
-        //SceneManager.LoadScene("Fase1", LoadSceneMode.Single);
-        numSteps = 10;
-        bloodLustMax = 1;
-        currentLevel = "Fase1"; //temp - será transferido para o sistema de seleção de fases, usando o "currentLevelNumber" para passar de uma fase a outra com o "´next"
     }
     public static void GameOver() //todos os tipos de game over diferentes que o jogador pode conseguir, possivelmente virá a ser um switch case
     {
@@ -46,13 +55,17 @@ public class GameManager : MonoBehaviour
             Debug.Log("Você ganhou!");
         }
     }
-
-    void Fases() //Switch case que será utilizado para determinar 
+    void Fases() //Switch case que será utilizado para determinar a fase
     {
         switch (currentLevel)
         {
             case "Fase1":
                 numSteps = 10;
+                bloodLustMax = 1;
+                break;
+
+            case "Fase2":
+                numSteps = 5;
                 bloodLustMax = 1;
                 break;
         }

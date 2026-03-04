@@ -9,6 +9,45 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScreen.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Fase1.unity
+    path: Assets/Scenes/Fases/Fase1.unity
     guid: 6d833cdb19e8b7c40ba7a442e58f2a58
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 6317fa31244b05144ac18433e5d820d3
+  - enabled: 1
+    path: Assets/Scenes/SelectFase.unity
+    guid: 872327225a2f25346ba98c96bc93b480
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 45dbcf81d048f824693f91e2933da3d2
+  - enabled: 1
+    path: Assets/Scenes/Winner.unity
+    guid: 201189ddd8a1a094d9287415d413ca5d
+  - enabled: 1
+    path: Assets/Scenes/Fases/Fase2.unity
+    guid: 297f76a342c442a4eb19a43b5a89a418
+  - enabled: 1
+    path: Assets/Scenes/Fases/Fase3.unity
+    guid: 497d505db0e1f034ab76b80b88c258e5
+  - enabled: 1
+    path: Assets/Scenes/Fases/Fase4.unity
+    guid: e6a2b615ef42b51408d6ddeb88644e1d
+  - enabled: 1
+    path: Assets/Scenes/Fases/Fase5.unity
+    guid: 1e7f326911f33c94dbf7b29f3e3d8f92
+  - enabled: 1
+    path: Assets/Scenes/Fases/Fase6.unity
+    guid: 8dcbb1d4f6cf22a448431518fbfd4921
+  - enabled: 1
+    path: Assets/Scenes/Fases/Fase7.unity
+    guid: 0f73b356816b21342ac21c3f45c84fc2
+  - enabled: 1
+    path: Assets/Scenes/Fases/Fase8.unity
+    guid: a8413e818ade676478cbc7ec2e4f7e29
+  - enabled: 1
+    path: Assets/Scenes/Fases/Fase9.unity
+    guid: a217c3a196c73e3438753b5a17f61ae4
+  - enabled: 1
+    path: Assets/Scenes/Fases/Fase10.unity
+    guid: 5442f42d26a0ae4448edae5d6fdd73b9
   m_configObjects: {}

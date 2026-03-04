@@ -1,18 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InterfaceManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Fase1() //funcionando agora apenas pois não há sistema de fases ainda 
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        SceneManager.LoadScene("Fase1", LoadSceneMode.Single);
+        GameManager.currentLevel = "Fase1"; //temp - será transferido para o sistema de seleção de fases, usando o "currentLevelNumber" para passar de uma fase a outra com o "´next"
     }
 }
