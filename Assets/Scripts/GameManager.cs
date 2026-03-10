@@ -1,15 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static int bloodLust, numSteps, bloodLustMax;
+    //Game related
+    public static int bloodLust, numSteps, bloodLustMax, currentLevelNumber;
+    public TextMeshProUGUI textSteps, textBlood;
     public static string currentLevel;
-    //int currentLevelNumber;
     public LayerMask wallLayer;
-    static GameManager instance;
+    //public GameObject Lobo;
+    //static GameManager instance;
+
+    //Cabra related
+    public static bool moveBlock; //controla se o jogador pode ou não se mover
+    public static float moveDistance = 2.55f, checkRadius = 0.05f;
 
     /* void Awake()
     {
@@ -28,19 +36,25 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         bloodLust = 0;
-        //Fase1(); //temporário
+        Fases();
+        textSteps.text = "Número de passos: " + numSteps;
     }
     void Update()
     {
         Reset();
-        Fases();
+        Interface();
+
+        if (!moveBlock)
+        {
+            Move();
+        }
     }
     void Reset()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(currentLevel, LoadSceneMode.Single);
-            LoboScript.moveBlock = false;
+            moveBlock = false;
         }      
     }
     public static void GameOver() //todos os tipos de game over diferentes que o jogador pode conseguir, possivelmente virá a ser um switch case
@@ -51,7 +65,7 @@ public class GameManager : MonoBehaviour
     {
         if (bloodLust == bloodLustMax)
         {
-            LoboScript.moveBlock = true;
+            moveBlock = true;
             Debug.Log("Você ganhou!");
         }
     }
@@ -70,4 +84,60 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+    void TryMove(Vector2 direction) //ações que ocorrem quando o personagem tenta se mover
+    {
+        Vector2 currentPos = transform.position;
+        Vector2 targetPos = currentPos + direction * moveDistance;
+
+        Collider2D hit = Physics2D.OverlapCircle(targetPos, checkRadius, wallLayer); //esse código checa se há paredes por perto e impede que o personagem se mova em direção a uma
+
+        if (hit == null) //caso não haja parede, o personagem se move
+        {
+            transform.position = targetPos;
+            numSteps--;
+        }
+        else //caso haja parede, o número de passos desce mas o personagem não se move
+        {
+            numSteps--;
+        }
+
+        if (numSteps <= 0) //se acabarem o número de passos, o jogador dá game over
+        {
+            GameOver();
+            numSteps = 0;
+            moveBlock = true;
+        }
+        else
+        {
+            //Debug.Log("Número de passos: " + GameManager.numSteps); //atualiza o número de passos na interface
+            textSteps.text = "Número de passos: " + numSteps;
+        }
+    }
+    void Move()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+            TryMove(Vector2.up);
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+            TryMove(Vector2.down);
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            TryMove(Vector2.left);
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+            TryMove(Vector2.right);
+    }
+
+    void Interface()
+    {
+        textBlood.text = "Animais mortos: " + bloodLust;
+    }
+
+    /*public static void BloodUpdate()
+    {
+        //Debug.Log("Animais Mortos: " + bloodLust); //alterar na interface
+        textBlood.text = "Animais mortos: " + bloodLust;
+        if (bloodLust == bloodLustMax)
+        {
+            Win();
+        }
+    }
+    */
 }

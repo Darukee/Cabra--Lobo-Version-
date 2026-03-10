@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AnimalScript : MonoBehaviour
 {
-    bool deadAnimal; //checa se o animal está vivo ou morto
+    public static bool deadAnimal; //checa se o animal está vivo ou morto
     void Start()
     {
 
@@ -20,12 +20,13 @@ public class AnimalScript : MonoBehaviour
     {
         if (col.gameObject.tag.Equals("Lobo"))
         {
+            Death();
             if (!deadAnimal)
             {
                 GameManager.bloodLust++;
-                Death();
+                
                 deadAnimal = true;
-                Debug.Log("Animais Mortos: " + GameManager.bloodLust); //alterar na interface
+                //Debug.Log("Animais Mortos: " + GameManager.bloodLust); //alterar na interface
 
                 if (GameManager.bloodLust == GameManager.bloodLustMax) //
                 {
@@ -36,7 +37,7 @@ public class AnimalScript : MonoBehaviour
         }
     }
 
-    void Death() //dependendo do tipo de animal, podem rolar coisas diferentes
+    public void Death() //dependendo do tipo de animal, podem rolar coisas diferentes
     {
         switch (gameObject.name)
         {
