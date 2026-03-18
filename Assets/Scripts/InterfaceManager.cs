@@ -60,5 +60,9 @@ public class InterfaceManager : MonoBehaviour
     {
         SceneManager.LoadScene("SelectFase", LoadSceneMode.Single);
     }
+    public void Return()
+    {
+        SceneManager.LoadScene("TitleScreen", LoadSceneMode.Single);
+    }
 
 }

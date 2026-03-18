@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     {
         bloodLust = 0;
         Fases();
-        textSteps.text = "Número de passos: " + numSteps;
+        textSteps.text = "" + numSteps;
     }
     void Update()
     {
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
         else
         {
             //Debug.Log("Número de passos: " + GameManager.numSteps); //atualiza o número de passos na interface
-            textSteps.text = "Número de passos: " + numSteps;
+            textSteps.text = "" + numSteps;
         }
     }
     void Move()
@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
 
     void Interface()
     {
-        textBlood.text = "Animais mortos: " + bloodLust;
+        textBlood.text = bloodLust + "/" + bloodLustMax;
     }
 
     /*public static void BloodUpdate()
