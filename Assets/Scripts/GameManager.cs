@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditor.ShaderData;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,69 +13,68 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI textSteps, textBlood;
     public static string currentLevel;
     public LayerMask wallLayer;
-    //public GameObject Lobo;
-    //static GameManager instance;
+    public GameObject gameOver, winPanel;
 
     //Cabra related
     public static bool moveBlock; //controla se o jogador pode ou não se mover
     public static float moveDistance = 2.55f, checkRadius = 0.05f;
 
-    /* void Awake()
-    {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
-    */
+    //Audio
+    [Header("AudioSource")]
+    [SerializeField] AudioSource audioSource;
+    [Header("AudioClip")]
+    [SerializeField] AudioClip steps, error;
 
     void Start()
     {
         bloodLust = 0;
+        moveBlock = false;
         Fases();
         textSteps.text = "" + numSteps;
+        gameOver.SetActive(false);
+        winPanel.SetActive(false);
     }
     void Update()
     {
-        Reset();
+        if (Input.GetKeyDown(KeyCode.R) && !moveBlock)
+        {
+            Reset();
+        }
+        
         Interface();
+        WinVerifier();
 
         if (!moveBlock)
         {
             Move();
         }
     }
-    void Reset()
+    public void Reset()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(currentLevel, LoadSceneMode.Single);
+            SceneManager.LoadScene("Fase" + currentLevelNumber, LoadSceneMode.Single);
             moveBlock = false;
-        }      
+        
     }
-    public static void GameOver() //todos os tipos de game over diferentes que o jogador pode conseguir, possivelmente virá a ser um switch case
+    public void GameOver() //todos os tipos de game over diferentes que o jogador pode conseguir, possivelmente virá a ser um switch case
     {
-        Debug.Log("Game Over");
+        gameOver.SetActive(true);
+
     }
-    public static void Win() //menu que aparece quando o jogador ganha e a situação para isso acontecer
+    public void Win() //menu que aparece quando o jogador ganha e a situação para isso acontecer
     {
         if (bloodLust == bloodLustMax)
         {
             moveBlock = true;
-            Debug.Log("Você ganhou!");
+            winPanel.SetActive(true);
         }
     }
+
     void Fases() //Switch case que será utilizado para determinar a fase
     {
         switch (currentLevel)
         {
             case "Fase1":
-                numSteps = 10;
+                numSteps = 8;
                 bloodLustMax = 1;
                 break;
 
@@ -95,16 +95,21 @@ public class GameManager : MonoBehaviour
         {
             transform.position = targetPos;
             numSteps--;
+            audioSource.clip = steps;
+            audioSource.Play();
         }
         else //caso haja parede, o número de passos desce mas o personagem não se move
         {
             numSteps--;
+            audioSource.clip = error;
+            audioSource.Play();
         }
 
-        if (numSteps <= 0) //se acabarem o número de passos, o jogador dá game over
+        if (numSteps <= 0 && !moveBlock) //se acabarem o número de passos, o jogador dá game over
         {
-            GameOver();
             numSteps = 0;
+            textSteps.text = "" + numSteps;
+            GameOver();
             moveBlock = true;
         }
         else
@@ -128,6 +133,24 @@ public class GameManager : MonoBehaviour
     void Interface()
     {
         textBlood.text = bloodLust + "/" + bloodLustMax;
+    }
+
+    void WinVerifier()
+    {
+        if (bloodLust != bloodLustMax)
+        {
+            if (AnimalScript.deadAnimal)
+            {
+                bloodLust++;
+                AnimalScript.deadAnimal = true;
+                if (bloodLust == bloodLustMax)
+                {
+                    Win();
+                }
+            }
+        }
+
+        
     }
 
     /*public static void BloodUpdate()

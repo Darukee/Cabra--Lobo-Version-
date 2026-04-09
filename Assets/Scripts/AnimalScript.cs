@@ -8,7 +8,7 @@ public class AnimalScript : MonoBehaviour
     public static bool deadAnimal; //checa se o animal está vivo ou morto
     void Start()
     {
-
+        deadAnimal = false;
     }
 
     // Update is called once per frame
@@ -20,20 +20,8 @@ public class AnimalScript : MonoBehaviour
     {
         if (col.gameObject.tag.Equals("Lobo"))
         {
+            deadAnimal = true;
             Death();
-            if (!deadAnimal)
-            {
-                GameManager.bloodLust++;
-                
-                deadAnimal = true;
-                //Debug.Log("Animais Mortos: " + GameManager.bloodLust); //alterar na interface
-
-                if (GameManager.bloodLust == GameManager.bloodLustMax) //
-                {
-                    GameManager.Win();
-                }
-            }
-
         }
     }
 

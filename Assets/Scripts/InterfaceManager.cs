@@ -5,56 +5,61 @@ using UnityEngine.SceneManagement;
 
 public class InterfaceManager : MonoBehaviour
 {
-    public void Fase1() //funcionando agora apenas pois não há sistema de fases ainda 
+    private void Start()
     {
-        SceneManager.LoadScene("Fase1", LoadSceneMode.Single);
-        GameManager.currentLevel = "Fase1"; //temp - será transferido para o sistema de seleção de fases, usando o "currentLevelNumber" para passar de uma fase a outra com o "´next"
-        //GameManager.currentLevelNumber = 1;
+        {
+            GameManager.currentLevelNumber = 1;
+        }
+    }
+    public void Fase1()
+    {
+        GameManager.currentLevelNumber = 1;
+        Fase();
     }
     public void Fase2() 
     {
-        SceneManager.LoadScene("Fase2", LoadSceneMode.Single);
-        GameManager.currentLevel = "Fase2";
+        GameManager.currentLevelNumber = 2;
+        Fase();
     }
     public void Fase3()
     {
-        SceneManager.LoadScene("Fase3", LoadSceneMode.Single);
-        GameManager.currentLevel = "Fase3";
+        GameManager.currentLevelNumber = 3;
+        Fase();
     }
     public void Fase4()
     {
-        SceneManager.LoadScene("Fase4", LoadSceneMode.Single);
-        GameManager.currentLevel = "Fase4";
+        GameManager.currentLevelNumber = 4;
+        Fase();
     }
     public void Fase5()
     {
-        SceneManager.LoadScene("Fase5", LoadSceneMode.Single);
-        GameManager.currentLevel = "Fase5";
+        GameManager.currentLevelNumber = 5;
+        Fase();
     }
     public void Fase6()
     {
-        SceneManager.LoadScene("Fase6", LoadSceneMode.Single);
-        GameManager.currentLevel = "Fase6";
+        GameManager.currentLevelNumber = 6;
+        Fase();
     }
     public void Fase7()
     {
-        SceneManager.LoadScene("Fase7", LoadSceneMode.Single);
-        GameManager.currentLevel = "Fase7";
+        GameManager.currentLevelNumber = 7;
+        Fase();
     }
     public void Fase8()
     {
-        SceneManager.LoadScene("Fase8", LoadSceneMode.Single);
-        GameManager.currentLevel = "Fase8";
+        GameManager.currentLevelNumber = 8;
+        Fase();
     }
     public void Fase9()
     {
-        SceneManager.LoadScene("Fase9", LoadSceneMode.Single);
-        GameManager.currentLevel = "Fase9";
+        GameManager.currentLevelNumber = 9;
+        Fase();
     }
     public void Fase10()
     {
-        SceneManager.LoadScene("Fase10", LoadSceneMode.Single);
-        GameManager.currentLevel = "Fase10";
+        GameManager.currentLevelNumber = 10;
+        Fase();
     }
     public void Select()
     {
@@ -64,5 +69,14 @@ public class InterfaceManager : MonoBehaviour
     {
         SceneManager.LoadScene("TitleScreen", LoadSceneMode.Single);
     }
-
+    public void Fase()
+    {
+        GameManager.currentLevel = "Fase" + GameManager.currentLevelNumber;
+        SceneManager.LoadScene("Fase" + GameManager.currentLevelNumber, LoadSceneMode.Single);
+    }
+    public void Next()
+    {
+        GameManager.currentLevelNumber++;
+        Fase();
+    }
 }
