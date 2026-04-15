@@ -13,7 +13,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI textSteps, textBlood;
     public static string currentLevel;
     public LayerMask wallLayer;
-    public GameObject gameOver, winPanel;
+    public GameObject gameOver, winPanel, minus;
+    Vector3 position;
+    Animator anim;
 
     //Cabra related
     public static bool moveBlock; //controla se o jogador pode ou não se mover
@@ -33,6 +35,8 @@ public class GameManager : MonoBehaviour
         textSteps.text = "" + numSteps;
         gameOver.SetActive(false);
         winPanel.SetActive(false);
+        position = new Vector3(13f, 7.3f);
+        anim = minus.GetComponent<Animator>();
     }
     void Update()
     {
@@ -40,7 +44,7 @@ public class GameManager : MonoBehaviour
         {
             Reset();
         }
-        
+
         Interface();
         WinVerifier();
 
@@ -51,9 +55,9 @@ public class GameManager : MonoBehaviour
     }
     public void Reset()
     {
-            SceneManager.LoadScene("Fase" + currentLevelNumber, LoadSceneMode.Single);
-            moveBlock = false;
-        
+        SceneManager.LoadScene("Fase" + currentLevelNumber, LoadSceneMode.Single);
+        moveBlock = false;
+
     }
     public void GameOver() //todos os tipos de game over diferentes que o jogador pode conseguir, possivelmente virá a ser um switch case
     {
@@ -97,12 +101,14 @@ public class GameManager : MonoBehaviour
             numSteps--;
             audioSource.clip = steps;
             audioSource.Play();
+            MinusOne();
         }
         else //caso haja parede, o número de passos desce mas o personagem não se move
         {
             numSteps--;
             audioSource.clip = error;
             audioSource.Play();
+            MinusOne();
         }
 
         if (numSteps <= 0 && !moveBlock) //se acabarem o número de passos, o jogador dá game over
@@ -117,6 +123,11 @@ public class GameManager : MonoBehaviour
             //Debug.Log("Número de passos: " + GameManager.numSteps); //atualiza o número de passos na interface
             textSteps.text = "" + numSteps;
         }
+    }
+    void MinusOne() //código longe de otimzado: instancias permanecem na cena
+    {
+        Instantiate(minus, position, transform.rotation);
+        anim.SetTrigger("Play");
     }
     void Move()
     {
@@ -150,17 +161,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        
+
     }
 
-    /*public static void BloodUpdate()
-    {
-        //Debug.Log("Animais Mortos: " + bloodLust); //alterar na interface
-        textBlood.text = "Animais mortos: " + bloodLust;
-        if (bloodLust == bloodLustMax)
-        {
-            Win();
-        }
-    }
-    */
 }
